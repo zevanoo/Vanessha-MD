@@ -21,7 +21,7 @@ const rewards = {
         kayu: Math.floor(Math.random() * 50) + ",chop",
         stone: Math.floor(Math.random() * 600) + ",mining"
     },
-    legenday: {
+    legendary: {
         money: Math.floor(Math.random() * 2630) + ",user",
         limit: Math.floor(Math.random() * 40) + ",user",
         potion: Math.floor(Math.random() * 37) + ",dungeon",
