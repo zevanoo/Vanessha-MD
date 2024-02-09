@@ -265,15 +265,17 @@ module.exports = async (zev, m, commands, Plugins) => {
 			isMedia
         };
     try {
-    	global.readMessage ? zev.readMessages([m.key]) : null
-        cmd.code(zev, m, extra, plugins)
+        global.readMessage ? await zev.readMessages([m.key]) : null;
+        await cmd.code(zev, m, extra, plugins);
     } catch (e) {
-        console.error(e);
-        for (let [jid] of global.owner.filter(([number, _, isDeveloper]) => isDeveloper && number)) {
-                        let data = (await conn.onWhatsApp(jid))[0] || {}
-                        if (data.exists) {
-                            zev.reply(data.jid, `*🗂️ Plugin:* ${cmd.files}\n*👤 Sender:* ${m.sender}\n*💬 Chat:* ${m.chat}\n*💻 Command:* ${cmd.name}\n\n\${format(e)}`.trim(), m)
-                        }
-                    }
+    	let text = util.format(e)
+        const owners = global.owner.filter(([number, isOwner, isDeveloper]) => isDeveloper === true);
+    await Promise.all(owners.map(async ([number]) => {
+        let data = (await zev.onWhatsApp(number))[0]
+        if (data.exists) {
+            await zev.reply(data.jid, `*🗂️ Plugin:* ${cmd.files}\n*👤 Sender:* ${m.sender}\n*💬 Chat:* ${m.chat}\n*💻 Command:* ${cmd.name}\n\n\ *${text}*`.trim(), m)
+        }
+    }));
+        m.reply(text)
     }
-};
+}

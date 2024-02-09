@@ -17,7 +17,7 @@ module.exports = [{
 ➭ Size: *${formatSize(data.mediaSize)}*`; 
 					zev.sendMedia(m.chat, media, m, { caption, mimetype: "video/mp4", fileName: `${info.title}.mp4` });
 			} catch (e) {
-			global.logs(e, "error")
+			console.error(e)
 			}
 			} else {
 				global.mess(zev, "error", m)
@@ -62,7 +62,7 @@ module.exports = [{
 	wait: true
 },{
 	name: "youtubesearch",
-	aliases: ["yts"],
+	aliases: ["yts", "ytsearch"],
 	tags: "downloader",
 	details: { desc: "search youtube query using this bot", usage: "yts (query)" },
 	code: async(zev, m, { text }, { yts }) => {

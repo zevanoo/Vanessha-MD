@@ -7,7 +7,7 @@ module.exports = [{
 		let dl = await ttdl(text)
 		let res = dl.data
 		let str = `*Tiktok Downloader:*
-➭ Title: *${res.desc}*
+➭ Title: *${res.description}*
 ➭ View: *${res.videoDetails.playCount}*`;
        if(res.type == "video") {
        	zev.sendMedia(m.chat, res.media[0].url, m, { caption: str, mimetype: "video/mp4" })

@@ -11,7 +11,6 @@ const fetch = require('node-fetch')
 const NodeCache = require("node-cache")
 const { serialize, Client } = require("./lib/serialize")
 const { loadCommands, loadPlugins } = require("./lib/loader")
-const { isUrl, generateMessageTag, getBuffer, getSizeMedia, fetchJson, sleep } = require('./lib/function')
 const store = makeInMemoryStore({ logger: pino().child({ level: 'silent', stream: 'store' }) })
 
 let Commands;
@@ -45,17 +44,13 @@ async function start() {
     }, 10000)
 
 const rl = readline.createInterface({ input: process.stdin, output: process.stdout })
-var question = function(text) {
-            return new Promise(function(resolve) {
-                rl.question(text, resolve);
-            });
-        };
+var question = text => new Promise(resolve => rl.question(text, resolve));
 
     if(useCODE && !zev.authState.creds.registered) {
 		const { registration } = { registration: {} }
 		let phoneNumber = ''
 		do {
-			phoneNumber = await question('Input a Valid number start with region code. Example : 62xxx:\n')
+			phoneNumber = await question("Vanessha".main + " - " + 'Input a Valid number start with region code. Example : 62xxx:\n'.info)
 		} while (!Object.keys(PHONENUMBER_MCC).some(v => phoneNumber.startsWith(v)))
 		rl.close()
 		phoneNumber = phoneNumber.replace(/\D/g,'')
@@ -106,7 +101,7 @@ var question = function(text) {
           global.logs("Multi device mismatch, please scan again", "error")
           process.exit(0)
         } else {
-          global.logs(reason, "warn")
+          console.error(reason)
           process.exit(0)
         }
      }

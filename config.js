@@ -5,11 +5,10 @@ global.zv = db
 global.owner = [
 ["6289520306297", true, true]
 ]
-global.botname = "Vanesshaa-MD"
-global.botnumber = "6289520306297"
-global.wm = "© Vanesshaa"
-global.expEarningPerCmd = 23
-global.multiplier = 40
+global.botname = "Vanesshaa-MD" // Nama bot
+global.wm = "© Vanesshaa" // wm bot
+global.expEarningPerCmd = 23 // exp yang dihasilkan per command
+global.multiplier = 40 // semakin tinggi, semakin sulit levelup
 
 global.zv.init('./database', {
 	"user": "user.json",
@@ -20,10 +19,11 @@ global.zv.init('./database', {
 	"tanam": "rpg/tanam.json",
 	"crate": "rpg/crates.json",
 	"chop": "rpg/chop.json"
-})
-global.public = true
-global.notifyAfterConnect = false
-global.readMessage = false
+}) // Gausah diubah
+
+global.public = false // mode public/self
+global.notifyAfterConnect = false // notifikasi dari bot ke owner setiap selesai terhubung
+global.readMessage = false // bot membaca pesan?
 
 colors.setTheme({
    main: ['brightBlue', 'bold'],
@@ -33,7 +33,7 @@ colors.setTheme({
 });
 
 global.logs = (text, type) => {
-	console.log("Zevanoo".main, "-", text[type])
+	console.log("Vanessha".main, "-", text[type])
 }
 
 global.mess = (zev, type, m) => {
