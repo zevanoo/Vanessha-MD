@@ -24,7 +24,7 @@ global.zv.init('./database', {
 	"pet": "rpg/pet.json"
 }) // Gausah diubah
 
-global.public = true // mode public/self
+global.public = false // mode public/self
 global.notifyAfterConnect = false // notifikasi dari bot ke owner setiap selesai terhubung
 global.readMessage = false // bot membaca pesan?
 
