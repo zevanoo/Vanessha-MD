@@ -3,6 +3,7 @@ const colors = require("@colors/colors");
 global.zv = db
 
 global.owner = [
+// [nomor owner, creator?, developer?]
 ["6289520306297", true, true]
 ]
 global.botname = "Vanesshaa-MD" // Nama bot
@@ -12,16 +13,18 @@ global.multiplier = 40 // semakin tinggi, semakin sulit levelup
 
 global.zv.init('./database', {
 	"user": "user.json",
+	"group": "groups.json",
 	"mancing": "rpg/mancing.json",
 	"mining": "rpg/mining.json",
 	"hunting": "rpg/hunt.json",
 	"dungeon": "rpg/dungeon.json",
 	"tanam": "rpg/tanam.json",
 	"crate": "rpg/crates.json",
-	"chop": "rpg/chop.json"
+	"chop": "rpg/chop.json",
+	"pet": "rpg/pet.json"
 }) // Gausah diubah
 
-global.public = false // mode public/self
+global.public = true // mode public/self
 global.notifyAfterConnect = false // notifikasi dari bot ke owner setiap selesai terhubung
 global.readMessage = false // bot membaca pesan?
 

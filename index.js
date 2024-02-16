@@ -101,7 +101,7 @@ var question = text => new Promise(resolve => rl.question(text, resolve));
           global.logs("Multi device mismatch, please scan again", "error")
           process.exit(0)
         } else {
-          console.error(reason)
+          console.error(lastDisconnect)
           process.exit(0)
         }
      }
@@ -114,12 +114,11 @@ var question = text => new Promise(resolve => rl.question(text, resolve));
 zev.number = zev.user?.["id"]["split"](":")[0] + "@s.whatsapp.net"
 zev.ev.on('messages.upsert', async chatUpdate => {
 // console.log(JSON.stringify(chatUpdate, undefined, 2))
-	try {
+try {
 mek = chatUpdate.messages[0]
 if (!mek.message) return
 mek.message = (Object.keys(mek.message)[0] === 'ephemeralMessage') ? mek.message.ephemeralMessage.message : mek.message
 if (mek.key && mek.key.remoteJid === 'status@broadcast') return
-if (!global.public && !mek.key.fromMe && chatUpdate.type === 'notify') return
 if (mek.key.id.startsWith('BAE5') && mek.key.id.length === 16) return
 m = await serialize(zev, mek, store)
 require("./zevchat")(zev, m, Commands, Plugins)

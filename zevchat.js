@@ -39,13 +39,10 @@ module.exports = async (zev, m, commands, Plugins) => {
 	if (cmd.name == undefined) return;
 	if (isCmd) {
     	console.log(chalk.yellow('[ PESAN ]'), chalk.yellow("Terkirim pukul " + moment.tz("Asia/Jakarta").format("HH:mm:ss") + " WIB | " + moment.tz("Asia/Jakarta").format("DD/MM/YYYY") + "\n"), chalk.blue(body || type) + "\n" + chalk.yellow(" Dari"), chalk.blue(m.sender) + "\n" + chalk.yellow(" Di"), isGroup ? chalk.blue(metadata.subject) : chalk.blue(m.sender) + chalk.yellow(" dengan nickname ") + chalk.blue(m.pushName), "\n" + chalk.green("------------------------------------------"));
-        require('./src/loadUserDatabase')(m)
-        global.zv.set("exp", global.zv.get("exp", m.sender, "user") + global.expEarningPerCmd, m.sender, "user")
-        require('./src/levelup')(zev, m)
-        require('./src/role')(m)
-        require('./src/area')(m)
+        require("./src/LoaderDB")(zev, m)
     }
 	
+	const isPublic = global.public
 	const isOwner = [baileys.jidNormalizedUser(zev.user?.["id"]["split"](":")[0]), ...global.owner.map(([number, isCreator, isDeveloper]) => number)].map(v => v + '@s.whatsapp.net').includes(m.sender)
     const isPrems = global.zv.get("premium", m.sender, "user")
     const isBanned = global.zv.get("banned", m.sender, "user")
@@ -63,8 +60,9 @@ module.exports = async (zev, m, commands, Plugins) => {
     const isAdmin = isGroup ? groupAdmins.includes(m.sender) : false;
 	const isSuperAdmin = isGroup ? superAdmin.includes(m.sender) : false;
 	const isBotAdmin = isGroup ? groupAdmins.includes(zev.number.replace(":3", "")) : false;
-
-    if (isOwner === false && isBanned === true) return;
+	
+	if (isOwner === false && isPublic === true) return
+    if (isOwner === false && isBanned === true) return
     
     if(isPrems === true) {
             let now = Date.now();
@@ -77,7 +75,7 @@ module.exports = async (zev, m, commands, Plugins) => {
             }
         }
 
-    if (isCmd == false && cmd.nonPrefix == false) {
+    if (isCmd === false && cmd.nonPrefix === false) {
         return;
     }
     if (isCmd && !cmd) {
@@ -106,19 +104,6 @@ module.exports = async (zev, m, commands, Plugins) => {
     
     if (cmd.isMedia && !isMedia) {
         return global.mess(zev, "media", m);
-    }
-    
-    if (cmd.isUrl && text == "") {
-    	return global.mess(zev, "url", m)
-    }
-    
-    if(cmd.isUrl && !isUrl(text)) {
-    	return global.mess(zev, "invalidUrl", m)
-    }
-
-    if (cmd.isRegistered && !isRegistered) {
-        zev.reply(m.chat, "Kamu belum terdaftar di dalam database bot, Silahkan daftar dengan " + prefix + "register untuk mendaftar.", m);
-        return;
     }
     
     if (cmd.isOwner && !isOwner) {
@@ -157,10 +142,6 @@ module.exports = async (zev, m, commands, Plugins) => {
     	return zev.reply(m.chat, `dibutukan level ${cmd.level} untuk mengakses fitur ini, level kamu ${global.zv.get("level", m.sender, "user")}`, m)
     }
     
-    if (cmd.isQuery && !text) {
-        return m.reply(usage);
-    }
-    
     if (cmd.wait) {
          global.mess(zev, "wait", m)
    }
@@ -171,7 +152,7 @@ module.exports = async (zev, m, commands, Plugins) => {
             return global.mess(zev, "limit", m);
         } else {
         	global.zv.set("limit", limit - 1, m.sender, "user")
-            zev.reply(m.chat, 'Limit terpakai 1', m);
+            // zev.reply(m.chat, 'Limit terpakai 1', m);
         }
     }
     
@@ -260,22 +241,22 @@ module.exports = async (zev, m, commands, Plugins) => {
 			isQuoted,
 			isCmd,
 			isUrl,
-			isPublic: zev.public,
+			isPublic,
 			isOwner,
 			isMedia
         };
     try {
         global.readMessage ? await zev.readMessages([m.key]) : null;
-        await cmd.code(zev, m, extra, plugins);
+        return await cmd.code(zev, m, extra, plugins);
     } catch (e) {
     	let text = util.format(e)
-        const owners = global.owner.filter(([number, isOwner, isDeveloper]) => isDeveloper === true);
+        const owners = global.owner.filter(([number, isCreator, isDeveloper]) => isDeveloper === true);
     await Promise.all(owners.map(async ([number]) => {
         let data = (await zev.onWhatsApp(number))[0]
         if (data.exists) {
             await zev.reply(data.jid, `*🗂️ Plugin:* ${cmd.files}\n*👤 Sender:* ${m.sender}\n*💬 Chat:* ${m.chat}\n*💻 Command:* ${cmd.name}\n\n\ *${text}*`.trim(), m)
         }
     }));
-        m.reply(text)
+    m.reply(text)
     }
 }

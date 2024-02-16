@@ -4,8 +4,9 @@ module.exports = [{
 	details: { desc: "list contact owner" },
 	code: async(zev, m, {}) => {
 		let list = []
-		global.owner.map(v => {
-			list.push(v[0])
+		let owner = global.owner.filter(([number, isCreator, isDeveloper]) => isCreator === true);
+		owner.map(async ([number]) => {
+			list.push(number)
 		})
 		zev.sendContact(m.chat, list, m)
 	}

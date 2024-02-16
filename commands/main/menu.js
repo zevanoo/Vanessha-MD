@@ -6,7 +6,7 @@ let defaultMenu = {
 ┇┃ ➯Owner : Zevano
 ┃║ ➯Bot name : ${global.botname}
 ┇┃ ➯Uptime : %uptime
-┃║ ➯Options : -desc, -usage, -info
+┃║ ➯Options : -desc, -use, -info
 ┇┃ ➯Mode : *${global.public ? "Public" : "Self"}*
 ┃║ ➯Total User : ${global.zv.totalf("user")}
 ┇┃ ➯Prefix: *%prefix*
@@ -96,12 +96,9 @@ if (args.length === 0) {
             }).join('\n');
         } else {
             const tag = arg.toLowerCase();
-
-            if (!commands.type.includes(tag)) {
-                return '│ ◦  Invalid tag: ' + tag;
-            }
-
             const categoryHeaderText = header.replace(/%category/g, tags[tag]);
+
+            if (!commands.type.includes(tag)) return `${categoryHeaderText}\n${'│ ◦  Invalid tag: ' + tag}\n${footer}`;
 
             const submenu = createSubmenu(tag);
 

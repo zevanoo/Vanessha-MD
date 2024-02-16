@@ -27,7 +27,7 @@ let hsl = `
 `.trim()
 
 setTimeout(() => {
-                     m.reply(`${hsl}`)
+                     zev.reply(m.chat, `${hsl}`, m)
 global.zv.set("axeDurability", global.zv.get("axeDurability", m.sender, "chop") - durabilityAxe, m.sender, "chop")
 global.zv.set("chopTimeout", (new Date * 1), m.sender, "chop")
 global.zv.set("pohon", global.zv.get("pohon", m.sender, "chop") + pohon, m.sender, "chop")

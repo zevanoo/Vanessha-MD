@@ -19,16 +19,16 @@ module.exports = [{
     let bibitStroberi = global.zv.get("bibitStroberi", m.sender, "tanam")
     let bibitBlueberi = global.zv.get("bibitBlueberi", m.sender, "tanam")
     
-    if(bibitApel < 100) return m.reply(`bibit *apel* mu harus lebih dari 100, beli dulu di ${prefix}shop`)
-    if(bibitMangga < 100) return m.reply(`bibit *mangga* mu harus lebih dari 100, beli dulu di ${prefix}shop`)
-    if(bibitPisang < 100) return m.reply(`bibit *pisang* mu harus lebih dari 100, beli dulu di ${prefix}shop`)
-    if(bibitWortel < 100) return m.reply(`bibit *wortel* mu harus lebih dari 100, beli dulu di ${prefix}shop`)
-    if(bibitJagung < 100) return m.reply(`bibit *jagung* mu harus lebih dari 100, beli dulu di ${prefix}shop`)
-    if(bibitSemangka < 100) return m.reply(`bibit *semangka* mu harus lebih dari 100, beli dulu di ${prefix}shop`)
-    if(bibitTimun < 100) return m.reply(`bibit *timun* mu harus lebih dari 100, beli dulu di ${prefix}shop`)
-    if(bibitTomat < 100) return m.reply(`bibit *tomat* mu harus lebih dari 100, beli dulu di ${prefix}shop`)
-    if(bibitStroberi < 100) return m.reply(`bibit *stroberi* mu harus lebih dari 100, beli dulu di ${prefix}shop`)
-    if(bibitBlueberi < 100) return m.reply(`bibit *blueberi* mu harus lebih dari 100, beli dulu di ${prefix}shop`)
+    if(bibitApel < 100) return zev.reply(m.chat, `bibit *apel* mu harus lebih dari 100, beli dulu di ${prefix}shop`, m)
+    if(bibitMangga < 100) return zev.reply(m.chat, `bibit *mangga* mu harus lebih dari 100, beli dulu di ${prefix}shop`, m)
+    if(bibitPisang < 100) return zev.reply(m.chat, `bibit *pisang* mu harus lebih dari 100, beli dulu di ${prefix}shop`, m)
+    if(bibitWortel < 100) return zev.reply(m.chat, `bibit *wortel* mu harus lebih dari 100, beli dulu di ${prefix}shop`, m)
+    if(bibitJagung < 100) return zev.reply(m.chat, `bibit *jagung* mu harus lebih dari 100, beli dulu di ${prefix}shop`, m)
+    if(bibitSemangka < 100) return zev.reply(m.chat, `bibit *semangka* mu harus lebih dari 100, beli dulu di ${prefix}shop`, m)
+    if(bibitTimun < 100) return zev.reply(m.chat, `bibit *timun* mu harus lebih dari 100, beli dulu di ${prefix}shop`, m)
+    if(bibitTomat < 100) return zev.reply(m.chat, `bibit *tomat* mu harus lebih dari 100, beli dulu di ${prefix}shop`, m)
+    if(bibitStroberi < 100) return zev.reply(m.chat, `bibit *stroberi* mu harus lebih dari 100, beli dulu di ${prefix}shop`, m)
+    if(bibitBlueberi < 100) return zev.reply(m.chat, `bibit *blueberi* mu harus lebih dari 100, beli dulu di ${prefix}shop`, m)
     
 const tanamPanen = global.zv.get("tanamPanen", m.sender, "tanam");
 const tanamTimeout = global.zv.get("tanamTimeout", m.sender, "tanam");
@@ -53,7 +53,7 @@ if(!tanamPanen === 0) {
         }, 300000);
 
         setTimeout(() => {
-            m.reply('Ditinggalkan, kamu akan diberitahu di private chat bahwa tanaman sudah siap panen')
+            zev.reply(m.chat, 'Ditinggalkan, kamu akan diberitahu di private chat bahwa tanaman sudah siap panen', m)
             global.zv.set("tanamPanen", Date.now() + 300000, m.sender, "tanam");
         }, 12000);
 
@@ -102,7 +102,7 @@ if(tanamPanen === 0) {
      *🍓 = [ ${stroberi} ]*			 *🫐 = [ ${blueberi} ]*
     `.trim();
 
-    m.reply(`${hsl}`);
+    zev.reply(m.chat, `${hsl}`, m)
     global.zv.set("apel", global.zv.get("apel", m.sender, "tanam") + apel, m.sender, "tanam");
     global.zv.set("wortel", global.zv.get("wortel", m.sender, "tanam") + wortel, m.sender, "tanam");
     global.zv.set("pisang", global.zv.get("pisang", m.sender, "tanam") + pisang, m.sender, "tanam");
@@ -118,5 +118,25 @@ if(tanamPanen === 0) {
 } else {
     zev.reply(m.chat, `tanamanmu belum siap panen, tunggu ${timer} agar bisa memanen`, m)
 }
+}
+},{
+	name: "lumbung",
+	tags: "rpg",
+	detaills: { desc: "cek hasil menanam" },
+	code: async (zev, m) => {
+ let hsl = `
+*《 LUMBUNG MU 》*
+ *🍎 = [ ${global.zv.get("apel", m.sender, "tanam")} ]* Apel
+ *🥕 = [ ${global.zv.get("wortel", m.sender, "tanam")} ]* Wortel
+ *🍌 = [ ${global.zv.get("pisang", m.sender, "tanam")} ]* Pisang
+ *🥭 = [ ${global.zv.get("mangga", m.sender, "tanam")} ]* Mangga
+ *🌽 = [ ${global.zv.get("jagung", m.sender, "tanam")} ]* Jagung
+ *🍉 = [ ${global.zv.get("semangka", m.sender, "tanam")} ]* Semangka
+ *🥒 = [ ${global.zv.get("timun", m.sender, "tanam")} ]* Timun
+ *🍅 = [ ${global.zv.get("tomat", m.sender, "tanam")} ]* Tomato
+ *🍓 = [ ${global.zv.get("stroberi", m.sender, "tanam")} ]* Stroberi
+ *🫐 = [ ${global.zv.get("blueberri", m.sender, "tanam")} ]* Blueberi
+`.trim()
+zev.reply(m.chat, hsl, m)
 }
 }]

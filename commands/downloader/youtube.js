@@ -3,8 +3,9 @@ module.exports = [{
 	aliases: ["ytv", "youtubemp4", "ytmp4"],
 	tags: "downloader",
 	details: { desc: "download video from youtube", usage: "ytv (url)" },
-	code: async(zev, m, { text, formatSize }, { ytv }) => {
-		let dl = await ytv(text)
+	code: async(zev, m, { args, formatSize, isUrl }, { ytv }) => {
+		if(!isUrl(args[0])) return global.mess(zev, "invalidUrl", m)
+		let dl = await ytv(args[0])
 		let data = dl.data
 		if(dl.status) {
 			try {
@@ -23,7 +24,6 @@ module.exports = [{
 				global.mess(zev, "error", m)
 			}
 	},
-	isUrl: true,
 	limit: true,
 	wait: true
 },{
@@ -31,8 +31,9 @@ module.exports = [{
 	aliases: ["yta", "youtubemp3", "ytmp3"],
 	tags: "downloader",
 	details: { desc: "download audio from youtube", usage: "yta (url)" },
-	code: async(zev, m, { text, formatSize }, { yta }) => {
-		let dl = await yta(text)
+	code: async(zev, m, { args, formatSize, isUrl }, { yta }) => {
+		if(!isUrl(args[0])) return global.mess(zev, "invalidUrl", m)
+		let dl = await yta(args[0])
 		let data = dl.data
 		if(dl.status) {
 					if(data.mediaSize > 100000000) return global.mess(zev, "oversize", m)
@@ -57,7 +58,6 @@ module.exports = [{
 				global.mess(zev, "error", m)
 			}
 	},
-	isUrl: true,
 	limit: true,
 	wait: true
 },{
@@ -66,6 +66,7 @@ module.exports = [{
 	tags: "downloader",
 	details: { desc: "search youtube query using this bot", usage: "yts (query)" },
 	code: async(zev, m, { text }, { yts }) => {
+		if(!text) return m.reply("masukkan query")
 		let dl = await yts(text)
 		let data = dl.data
 		let header = `*YouTube Search:*`
@@ -86,6 +87,5 @@ module.exports = [{
 		zev.reply(m.chat, header + "\n\n" + body, m)
 	},
 	limit: true,
-	isQuery: true,
 	wait: true
 }]

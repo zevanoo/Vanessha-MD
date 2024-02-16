@@ -23,7 +23,7 @@ module.exports = [{
     if (new Date - global.zv.get("miningTimeout", m.sender, "mining") > 600000) {
 
           setTimeout(() => {
-          	m.reply(`${selesai}
+          	zev.reply(m.chat, `${selesai}
 Akhirnya Kamu Mendapatkan :
 💎 ${diamond} Diamond
 ⛓️ ${iron} Iron
@@ -32,7 +32,7 @@ Akhirnya Kamu Mendapatkan :
 🔩 ${titanium} Titanium
 ☢️ ${uranium} Uranium
 🔧 ${aluminium} Aluminium
-`)
+`, m)
 global.zv.set("pickaxeDurability", (global.zv.get("pickaxeDurability", m.sender, "mining") - konz * 1), m.sender, "mining")
 global.zv.set("diamond", global.zv.get("diamond", m.sender, "mining") + diamond, m.sender, "mining")
 global.zv.set("iron", global.zv.get("iron", m.sender, "mining") + iron, m.sender, "mining")
@@ -51,9 +51,9 @@ global.zv.set("aluminium", global.zv.get("aluminium", m.sender, "mining") + alum
                      m.reply('_Sedang Mencari Goa..._')
                      }, 0) 
                      
-            } else m.reply(`Anda kelelahan dan Mager untuk mining, Silahkan tunggu ${waktur} lagi untuk mining!!`)
-         } else m.reply(`Pickaxe kamu akan hancur segera repair!`)
-     } else m.reply(`Kamu Belum Mempunyai Pickaxe, Segera beli ke ${prefix}shop !!`)
+            } else zev.reply(m.chat, `Anda kelelahan dan Mager untuk mining, Silahkan tunggu ${waktur} lagi untuk mining!!`, m)
+         } else zev.reply(m.chat, `Pickaxe kamu akan hancur segera repair!`, m)
+     } else zev.reply(m.chat`Kamu Belum Mempunyai Pickaxe, Segera beli ke ${prefix}shop !!`, m)
 }
 },{
 	name: "box",

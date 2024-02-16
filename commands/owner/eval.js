@@ -4,7 +4,7 @@ module.exports = [{
     desc: "Running Terminal Code via Command",
     tags: "owner",
     code: async(zev, m, { exec, text }) => {
-    	zev.reply("Executing....")
+    	zev.reply(m.chat, "Executing....", m)
 				if (!text) return m.reply(`No query code`)
         exec(text, async (err, stdout) => {
             if (err) return m.reply(err)

@@ -30,7 +30,7 @@ let hsl = `
 `.trim()
 
 setTimeout(() => {
-                     m.reply(`${hsl}`)
+                     zev.reply(m.chat, `${hsl}`, m)
 global.zv.set("swordDurability", global.zv.get("swordDurability", m.sender, "hunting") - durabilitySword, m.sender, "hunting")
 global.zv.set("huntingTimeout", (new Date * 1), m.sender, "hunting")
 global.zv.set("panda", global.zv.get("panda", m.sender, "hunting") + panda, m.sender, "hunting")

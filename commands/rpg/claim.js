@@ -12,7 +12,7 @@ module.exports = [{
         global.zv.set("potion", global.zv.get("potion", m.sender, "dungeon") + 1, m.sender, "dungeon")
         global.zv.set("dailyTimeout", new Date * 1, m.sender, "user")
     } else {
-        m.reply(`silahkan tunggu *${timers}* lagi untuk bisa mengclaim lagi`)
+        zev.reply(m.chat, `silahkan tunggu *${timers}* lagi untuk bisa mengclaim lagi`, m)
     };
    }
 },{
@@ -24,12 +24,12 @@ module.exports = [{
     let _timers = (604800000 - __timers)
     let timers = clockString(_timers) 
     if (new Date - global.zv.get("weeklyTimeout", m.sender, "user") > 604800000) {
-        zev.reply(m.chat, `Anda sudah mengklaim dan mendapatkan 700 money dan 5 rare crate`, m)
+        zev.reply(m.chat, `Anda sudah mengklaim dan mendapatkan 700 money dan 2 rare crate`, m)
         global.zv.set("money", global.zv.get("money", m.sender, "user") + 700, m.sender, "user")
-        global.zv.set("rare", global.zv.get("rare", m.sender, "crate") + 5, m.sender, "crate")
+        global.zv.set("rare", global.zv.get("rare", m.sender, "crate") + 2, m.sender, "crate")
         global.zv.set("weeklyTimeout", new Date * 1, m.sender, "user")
     } else {
-        m.reply(`silahkan tunggu *${timers}* lagi untuk bisa mengclaim lagi`)
+        zev.reply(m.chat, `silahkan tunggu *${timers}* lagi untuk bisa mengclaim lagi`, m)
     };
    }
 },{
@@ -41,13 +41,13 @@ module.exports = [{
     let _timers = (2592000000 - __timers)
     let timers = clockString(_timers) 
     if (new Date - global.zv.get("monthlyTimeout", m.sender, "user") > 2592000000) {
-        zev.reply(m.chat, `Anda sudah mengklaim dan mendapatkan 2000 money dan 3 legendary crate dan 2 pet crate`, m)
+        zev.reply(m.chat, `Anda sudah mengklaim dan mendapatkan 2000 money dan 1 legendary crate dan 2 pet crate`, m)
         global.zv.set("money", global.zv.get("money", m.sender, "user") + 2000, m.sender, "user")
-        global.zv.set("legendary", global.zv.get("legendary", m.sender, "crate") + 3, m.sender, "crate")
+        global.zv.set("legendary", global.zv.get("legendary", m.sender, "crate") + 1, m.sender, "crate")
         global.zv.set("pet", global.zv.get("pet", m.sender, "crate") + 3, m.sender, "crate")
         global.zv.set("monthlyTimeout", new Date * 1, m.sender, "user")
     } else {
-        m.reply(`silahkan tunggu *${timers}* lagi untuk bisa mengclaim lagi`)
+        zev.reply(m.chat, `silahkan tunggu *${timers}* lagi untuk bisa mengclaim lagi`, m)
     };
    }
 }]

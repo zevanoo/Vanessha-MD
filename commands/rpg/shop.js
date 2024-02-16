@@ -543,37 +543,37 @@ module.exports = [{
             } else {
                 const itemListData = itemsShop[type];
                 const typeItems = type === "buy" ? "beli" : "jual"
-                if (!itemListData) return m.reply(`Tipe transaksi '${type}' tidak valid`);
+                if (!itemListData) return zev.reply(m.chat, `Tipe transaksi '${type}' tidak valid`, m)
                 itemList = `List items yang tersedia:\nItemName || Harga ${typeItems} \n${Object.entries(itemListData).map(([itemName, itemData]) => `${itemName} || ${(itemData.money || itemData.exp) ? (itemData.money || itemData.exp) : "-"}`).join('\n')}`;
             }
-            return m.reply(`Format:
+            return zev.reply(m.chat, `Format:
 ${prefix}shop sell/buy (items) (quantity)
 Example:
 ${prefix}shop ${(type || "buy")} apel 1
 
 ${itemList}
-`.trim());
+`.trim(), m);
         }
         
         const itemList = itemsShop[type]
-        if (!itemList) return m.reply(`Tipe transaksi '${type}' tidak valid`);
+        if (!itemList) return zev.reply(m.chat, `Tipe transaksi '${type}' tidak valid`, m)
         
         const selectedItem = itemList[item];
-        if (!selectedItem) return m.reply(`Item '${item}' tidak tersedia untuk ${type}`);
+        if (!selectedItem) return zev.reply(m.chat, `Item '${item}' tidak tersedia untuk ${type}`, m);
 
         const paymentMethod = Object.keys(selectedItem).find(prop => prop !== "database" && prop !== "max");
-        if (!paymentMethod) return m.reply(`Metode pembayaran untuk item '${item}' tidak valid`);
+        if (!paymentMethod) return zev.reply(m.chat, `Metode pembayaran untuk item '${item}' tidak valid`, m);
         
         const userPayment = global.zv.get(paymentMethod, m.sender, "user") || 0;
         const itemCost = selectedItem[paymentMethod] * total;
         
         if(type === "buy") {
-        if (userPayment < itemCost) return m.reply(`${paymentMethod === "money" ? "Uang" : "Exp"}mu tidak cukup untuk membeli item ini\ncoba ${prefix}daily / ${prefix}weekly / ${prefix}monthly untuk mendapatkan sesuatu`);
+        if (userPayment < itemCost) return zev.reply(m.chat, `${paymentMethod === "money" ? "Uang" : "Exp"}mu tidak cukup untuk membeli item ini\ncoba ${prefix}daily / ${prefix}weekly / ${prefix}monthly untuk mendapatkan sesuatu`, m)
         
         const maxItem = selectedItem.max || Infinity;
         const currentTotal = global.zv.get(item, m.sender, selectedItem.database) || 0;
 
-        if (total + currentTotal > maxItem) return m.reply(`Kamu hanya dapat memiliki maksimal ${maxItem} ${item}, ${item} mu sekarang ${currentTotal}`);
+        if (total + currentTotal > maxItem) return zev.reply(m.chat, `Kamu hanya dapat memiliki maksimal ${maxItem} ${item}, ${item} mu sekarang ${currentTotal}`, m)
 
         global.zv.set(paymentMethod, userPayment - itemCost, m.sender, "user");
 
@@ -589,12 +589,12 @@ ${itemList}
         itemData += total
         global.zv.set(item, itemData, m.sender, selectedItem.database);
 
-        return m.reply(`Sukses membeli ${item} sejumlah ${total} dan ${paymentMethod}mu berkurang ${itemCost}`);
+        return zev.reply(m.chat, `Sukses membeli ${item} sejumlah ${total} dan ${paymentMethod}mu berkurang ${itemCost}`, m)
         
     } else if(type === "sell") {
     const itemInInventory = global.zv.get(item, m.sender, selectedItem.database) || 0;
 
-            if (itemInInventory < total) return m.reply(`Kamu tidak memiliki cukup ${item} untuk dijual`);
+            if (itemInInventory < total) return zev.reply(m.chat, `Kamu tidak memiliki cukup ${item} untuk dijual`, m)
 
             global.zv.set(paymentMethod, userPayment + (selectedItem[paymentMethod] * total), m.sender, "user");
 
@@ -610,7 +610,7 @@ ${itemList}
             itemData -= total;
             global.zv.set(item, m.sender, itemData, selectedItem.database);
 
-            return m.reply(`Sukses menjual ${item} sejumlah ${total} dan ${paymentMethod}mu bertambah ${itemCost}`);
+            return zev.reply(m.chat, `Sukses menjual ${item} sejumlah ${total} dan ${paymentMethod}mu bertambah ${itemCost}`, m)
             
         }
    }

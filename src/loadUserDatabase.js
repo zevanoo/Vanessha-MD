@@ -7,7 +7,7 @@ global.zv.variables({
     banned: false,
     limit: 20,
     premiumTimestamp: 0,
-    registered: false,
+    joinCount: 0,
     exp: 0,
     level: 1,
     money: 0,
@@ -120,4 +120,12 @@ global.zv.variables({
 	rotan: 0,
 	palem: 0
 }, "chop")
+// pet
+global.zv.variables({
+	id: m.sender,
+	kucing: 0,
+	rubah: 0,
+	kuda: 0,
+	makananpet: 0
+}, "pet")
 }

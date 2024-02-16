@@ -32,7 +32,7 @@ module.exports = [{
 
     if (new Date - global.zv.get("dungeonTimeout", m.sender, "dungeon") > 120000) {
         let monster = monsters.find(monster => monster.area === area)
-        if (!monster) return m.reply("Tidak ada monster yang ditemukan di area ini.")
+        if (!monster) return zev.reply(m.chat, "Tidak ada monster yang ditemukan di area ini.", m)
 
         let coins = Math.floor(Math.random() * 30)
         let exp = Math.floor(Math.random() * 50)
@@ -45,13 +45,13 @@ module.exports = [{
         if (health <= 0) {
             global.zv.set("level", global.zv.get("level", m.sender, "user") - 1, m.sender, "user")
             global.zv.set("health", 1000, m.sender, "dungeon")
-            return m.reply(`*${pushName}* Anda mati ditangan *${monster.name}* dan turun 1 level karena mati saat berburu!`)
+            return zev.reply(m.chat, `*${pushName}* Anda mati ditangan *${monster.name}* dan turun 1 level karena mati saat berburu!`, m)
         }
 
         global.zv.set("money", global.zv.get("money", m.sender, "user") + coins, m.sender, "user")
         global.zv.set("exp", global.zv.get("exp", m.sender, "user") + exp, m.sender, "user")
 
-        m.reply(`*${pushName}* menemukan dan membunuh *${monster.name}*\nMendapatkan ${coins} coins & ${exp} XP\nBerkurang -${dmg} HP, Tersisa ${global.zv.get("health", m.sender, "dungeon")}/100`)
+        zev.reply(m.chat, `*${pushName}* menemukan dan membunuh *${monster.name}*\nMendapatkan ${coins} coins & ${exp} XP\nBerkurang -${dmg} HP, Tersisa ${global.zv.get("health", m.sender, "dungeon")}/1000`, m)
     } else {
         let cd = new Date - global.zv.get("dungeonTimeout", m.sender, "dungeon")
         let s = Math.ceil(3000 - cd / 1000)

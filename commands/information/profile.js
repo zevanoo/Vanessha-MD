@@ -19,6 +19,7 @@ module.exports = [{
 ┇┃ ➯Role: ${global.zv.get("role", m.sender, "user")}
 ┃║ ➯Level: ${level}
 ┇┃ ➯Money: ${await global.zv.get("money", m.sender, "user")}
+┃║ ➯Area: ${await global.zv.get("area", m.sender, "dungeon")}
 ┃❏
 ┗┳━━◩
 ┏┛

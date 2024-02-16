@@ -20,10 +20,10 @@ module.exports = [{
         };
 
         zev.sendMessage(m.chat, {
-        	text: text,
+        	text: text || global.botname,
         mentions: participants.map(a => a.id)
        }, { quoted: freply });
     },
     isGroup: true,
-    isAdmin: true
+    isAdmin: true,
 }]
