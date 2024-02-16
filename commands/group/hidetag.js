@@ -25,5 +25,5 @@ module.exports = [{
        }, { quoted: freply });
     },
     isGroup: true,
-    isAdmin: true,
+    isAdmin: true
 }]
